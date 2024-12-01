@@ -1,26 +1,24 @@
-import Api.*;
-import Data.*;
-import Generators.UserGenerators;
+import api.*;
+import data.*;
+import generators.UserGenerators;
 import io.qameta.allure.Description;
 import io.restassured.response.ValidatableResponse;
 import org.junit.*;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import PageObjects.*;
+import pageobjects.*;
 
 import static org.junit.Assert.assertTrue;
 
-public class LoginTest {
-    private LoginApi loginApi;
+public class LoginTest extends BaseTest  {
     private User user;
-    private WebDriver driver;
     private LoginPage loginPage;
     private MainPage mainPage;
     private PasswordRecoveryPage passwordRecoveryPage;
     private RegistrationPage registrationPage;
     private ProfilePage profilePage;
-    private String token;
+
+    static final String LOGIN_URL = "https://stellarburgers.nomoreparties.site/login";
 
     @Before
     public void setUp() {
@@ -95,20 +93,10 @@ public class LoginTest {
 
         wait.until(ExpectedConditions.visibilityOfElementLocated(profilePage.getLogoutButttonElement()));
         wait.until(ExpectedConditions.elementToBeClickable(profilePage.getLogoutButton())).click();
-        wait.until(ExpectedConditions.urlToBe("https://stellarburgers.nomoreparties.site/login"));
+        wait.until(ExpectedConditions.urlToBe(LOGIN_URL));
 
         String currentUrl = driver.getCurrentUrl();
 
-        Assert.assertEquals("https://stellarburgers.nomoreparties.site/login", currentUrl);
-    }
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-        if(token != null){
-            loginApi.deleteUser(token);
-        }
+        Assert.assertEquals(LOGIN_URL, currentUrl);
     }
 }

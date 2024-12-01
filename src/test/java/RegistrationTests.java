@@ -1,24 +1,19 @@
-import Api.*;
-import Data.*;
-import Generators.UserGenerators;
+import api.*;
+import data.*;
+import generators.UserGenerators;
 import io.qameta.allure.Description;
 import io.restassured.response.ValidatableResponse;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import PageObjects.RegistrationPage;
-import PageObjects.WebDriverFactory;
+import pageobjects.RegistrationPage;
+import pageobjects.WebDriverFactory;
 
 import static org.junit.Assert.assertTrue;
 
-public class RegistrationTests {
-    private WebDriver driver;
+public class RegistrationTests extends BaseTest {
     private RegistrationPage registrationPage;
-    private String token;
     private User user;
     private Credentials login;
-    private LoginApi authApi;
 
     @Before
     public void setUp() {
@@ -29,7 +24,7 @@ public class RegistrationTests {
         registrationPage = new RegistrationPage(driver);
         registrationPage.open();
 
-        authApi = new LoginApi();
+        loginApi = new LoginApi();
         user = UserGenerators.createValidUser();
         login = new Credentials(user.getEmail(), user.getPassword());
     }
@@ -41,7 +36,7 @@ public class RegistrationTests {
 
         assertTrue("Пользоватлеь не заргистрирован", registrationPage.isSuccessfulRegistration());
 
-        ValidatableResponse responseCreate = authApi.loginUser(login);
+        ValidatableResponse responseCreate = loginApi.loginUser(login);
 
         String bearerToken = responseCreate.extract().path("accessToken");
         token = bearerToken.substring(7);
@@ -53,16 +48,5 @@ public class RegistrationTests {
         registrationPage.register("TestUser", "testuser@example.com", "pass");
 
         assertTrue("Короткий пароль", registrationPage.isPasswordErrorDisplayed());
-    }
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
-
-        if(token != null){
-            authApi.deleteUser(token);
-        }
     }
 }

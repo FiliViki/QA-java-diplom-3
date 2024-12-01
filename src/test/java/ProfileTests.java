@@ -1,24 +1,24 @@
-import PageObjects.LoginPage;
-import PageObjects.MainPage;
-import PageObjects.ProfilePage;
-import Api.*;
-import Data.*;
-import Generators.UserGenerators;
+import pageobjects.LoginPage;
+import pageobjects.MainPage;
+import pageobjects.ProfilePage;
+import api.*;
+import data.*;
+import generators.UserGenerators;
 import io.restassured.response.ValidatableResponse;
 import org.junit.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import PageObjects.WebDriverFactory;
+import pageobjects.WebDriverFactory;
 
-public class ProfileTests {
-    private LoginApi loginApi;
+public class ProfileTests extends BaseTest {
     private User user;
-    private WebDriver driver;
     private LoginPage loginPage;
     private MainPage mainPage;
     private ProfilePage profilePage;
-    private String token;
+
+    static final String HOME_URL = "https://stellarburgers.nomoreparties.site/";
+    static final String PROFILE_URL = "https://stellarburgers.nomoreparties.site/account/profile";
 
     @Before
     public void setUp() {
@@ -51,10 +51,10 @@ public class ProfileTests {
         wait.until(ExpectedConditions.elementToBeClickable(mainPage.getProfileLink()));
 
         mainPage.goToProfile();
-        wait.until(ExpectedConditions.urlToBe("https://stellarburgers.nomoreparties.site/account/profile"));
+        wait.until(ExpectedConditions.urlToBe(PROFILE_URL));
 
         String currentUrl = driver.getCurrentUrl();
-        Assert.assertEquals("URL не соответствует ожидаемому", "https://stellarburgers.nomoreparties.site/account/profile", currentUrl);
+        Assert.assertEquals("URL не соответствует ожидаемому", PROFILE_URL, currentUrl);
 
     }
 
@@ -71,10 +71,10 @@ public class ProfileTests {
         wait.until(ExpectedConditions.visibilityOfElementLocated(profilePage.getLogo()));
 
         profilePage.clickLogo();
-        wait.until(ExpectedConditions.urlToBe("https://stellarburgers.nomoreparties.site/"));
+        wait.until(ExpectedConditions.urlToBe(HOME_URL));
 
         String currentUrl = driver.getCurrentUrl();
-        Assert.assertEquals("URL не соответствует ожидаемому", "https://stellarburgers.nomoreparties.site/", currentUrl);
+        Assert.assertEquals("URL не соответствует ожидаемому", HOME_URL, currentUrl);
     }
 
     @Test
@@ -90,10 +90,10 @@ public class ProfileTests {
         wait.until(ExpectedConditions.visibilityOfElementLocated(profilePage.getConstructorButton()));
 
         profilePage.goToMainByConstructorButton();
-        wait.until(ExpectedConditions.urlToBe("https://stellarburgers.nomoreparties.site/"));
+        wait.until(ExpectedConditions.urlToBe(HOME_URL));
 
         String currentUrl = driver.getCurrentUrl();
-        Assert.assertEquals("URL не соответствует ожидаемому", "https://stellarburgers.nomoreparties.site/", currentUrl);
+        Assert.assertEquals("URL не соответствует ожидаемому", HOME_URL, currentUrl);
     }
 
     @After

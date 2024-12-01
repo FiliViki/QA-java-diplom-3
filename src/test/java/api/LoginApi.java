@@ -1,11 +1,11 @@
-package Api;
+package api;
 
-import Data.Credentials;
-import Data.User;
+import data.Credentials;
+import data.User;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 
-import static Config.Environment.HOST;
+import static config.Environment.HOST;
 import static io.restassured.RestAssured.given;
 
 public class LoginApi {

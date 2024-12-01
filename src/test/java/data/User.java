@@ -1,4 +1,4 @@
-package Data;
+package data;
 
 public class User {
     public String email;

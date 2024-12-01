@@ -1,15 +1,12 @@
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import PageObjects.MainPage;
-import PageObjects.WebDriverFactory;
+import pageobjects.MainPage;
+import pageobjects.WebDriverFactory;
 
 import static org.junit.Assert.*;
 
-public class MainPageTest {
-    private WebDriver driver;
+public class MainPageTest extends BaseTest {
     private MainPage mainPage;
 
     @Before
@@ -44,12 +41,5 @@ public class MainPageTest {
         new WebDriverWait(driver, 10);
 
         assertTrue("Вкладка начинок не активна", mainPage.isFillingTabActive());
-    }
-
-    @After
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-        }
     }
 }

@@ -1,6 +1,6 @@
-package Generators;
+package generators;
 
-import Data.User;
+import data.User;
 import com.github.javafaker.Faker;
 import org.apache.commons.lang3.RandomStringUtils;
 
